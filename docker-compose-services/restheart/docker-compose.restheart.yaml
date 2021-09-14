@@ -3,6 +3,8 @@ version: '3.6'
 # DEPENDS ON docker-compose.mongo.yaml
 # DOWNLOAD FROM https://github.com/drud/ddev-contrib/blob/master/docker-compose-services/mongodb/docker-compose.mongo.yaml
 # SAVE default.properties into .ddev directory
+# ACCESS API FROM http://project-name.ddev.site:8880/<collection>
+# DEFAULT USER: admin | DEFAULT PASS: secret
 services:
   restheart:
     container_name: ddev-${DDEV_SITENAME}-restheart
