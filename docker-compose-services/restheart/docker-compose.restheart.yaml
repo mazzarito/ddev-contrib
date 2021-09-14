@@ -1,0 +1,29 @@
+version: '3.6'
+
+# DEPENDS ON docker-compose.mongo.yaml
+# DOWNLOAD FROM https://github.com/drud/ddev-contrib/blob/master/docker-compose-services/mongodb/docker-compose.mongo.yaml
+services:
+  restheart:
+    container_name: ddev-${DDEV_SITENAME}-restheart
+    image: softinstigate/restheart:latest
+    environment:
+      MONGO_URI: mongodb://db:db@mongo/?authSource=admin
+      ROOT_MONGO_RESOURCE: '/db'
+      VIRTUAL_HOST: $DDEV_HOSTNAME
+      HTTP_EXPOSE: "8880:8080"
+      HTTPS_EXPOSE: "8884:8080"
+    volumes:
+      - ".:/mnt/ddev_config"
+    command: [ "--envFile", "/mnt/ddev_config/restheart/default.properties" ]
+    depends_on:
+    - mongo
+    ports:
+    - "8080:8080"
+    restart: "no"
+    expose:
+    - "8080"
+    links:
+    - mongo:mongo
+    labels:
+      com.ddev.site-name: ${DDEV_SITENAME}
+      com.ddev.approot: $DDEV_APPROOT
